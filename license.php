@@ -1,39 +1,31 @@
 <?php
 
-$url = "https://air9q2dn.anycast.nagra.com/AIR9Q2DN/wvls/contentlicenseservice/v1/licenses";
+$ch = curl_init();
 
-$curl = curl_init($url);
-curl_setopt($curl, CURLOPT_URL, $url);
-curl_setopt($curl, CURLOPT_POST, true);
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_URL, 'https://air9q2dn.anycast.nagra.com/AIR9Q2DN/wvls/contentlicenseservice/v1/licenses');
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
-$headers = array(
-   "authority: air9q2dn.anycast.nagra.com",
-   "sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="90", "Microsoft Edge";v="90"",
-   "accept: application/json",
-   "nv-authorizations: eyJraWQiOiIzNjk0MDciLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXIiOiIxLjAiLCJ0eXAiOiJDb250ZW50QXV0aFoiLCJleHAiOjE2MjY4NDAwNTIsImNvbnRlbnRSaWdodHMiOlt7ImNvbnRlbnRJZCI6InplZWNpbmVtYWhkIiwic3RhcnQiOiIyMDIxLTA1LTIyVDA5OjMwOjUyLjU2M1oiLCJlbmQiOiIyMDIxLTA2LTAxVDE2OjI4OjA1LjI2N1oiLCJkdXJhdGlvbiI6NTE4NDAwMCwic3RvcmFibGUiOnRydWUsImRlZmF1bHRVc2FnZVJ1bGVzIjp7ImRpZ2l0YWxPbmx5IjpmYWxzZSwiaGRjcCI6ZmFsc2UsInVucHJvdGVjdGVkRGlnaXRhbE91dHB1dCI6dHJ1ZX19XX0.h2UHjIx4QBc2O2eeGa8EoadHIeyP3vRknhL6gn0kFNo",
-   "sec-ch-ua-mobile: ?0",
-   "user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36 Edg/90.0.818.62",
-   "content-type: application/json",
-   "origin: https://www.airtelxstream.in",
-   "sec-fetch-site: cross-site",
-   "sec-fetch-mode: cors",
-   "sec-fetch-dest: empty",
-   "referer: https://www.airtelxstream.in/",
-   "accept-language: en-US,en;q=0.9",
-);
-curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_ENCODING, 'gzip, deflate');
 
-$data = '{"challenge":"CAQ="}';
+$headers = array();
+$headers[] = 'Authority: air9q2dn.anycast.nagra.com';
+$headers[] = 'Sec-Ch-Ua: \" Not A;Brand\";v=\"99\", \"Chromium\";v=\"90\", \"Microsoft Edge\";v=\"90\"';
+$headers[] = 'Accept: application/json';
+$headers[] = 'Nv-Authorizations: eyJraWQiOiIzNjk0MDciLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2ZXIiOiIxLjAiLCJ0eXAiOiJDb250ZW50QXV0aFoiLCJleHAiOjE2MjY4NDAwNTIsImNvbnRlbnRSaWdodHMiOlt7ImNvbnRlbnRJZCI6InplZWNpbmVtYWhkIiwic3RhcnQiOiIyMDIxLTA1LTIyVDA5OjMwOjUyLjU2M1oiLCJlbmQiOiIyMDIxLTA2LTAxVDE2OjI4OjA1LjI2N1oiLCJkdXJhdGlvbiI6NTE4NDAwMCwic3RvcmFibGUiOnRydWUsImRlZmF1bHRVc2FnZVJ1bGVzIjp7ImRpZ2l0YWxPbmx5IjpmYWxzZSwiaGRjcCI6ZmFsc2UsInVucHJvdGVjdGVkRGlnaXRhbE91dHB1dCI6dHJ1ZX19XX0.h2UHjIx4QBc2O2eeGa8EoadHIeyP3vRknhL6gn0kFNo';
+$headers[] = 'Sec-Ch-Ua-Mobile: ?0';
+$headers[] = 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36 Edg/90.0.818.62';
+$headers[] = 'Content-Type: application/json';
+$headers[] = 'Origin: https://www.airtelxstream.in';
+$headers[] = 'Sec-Fetch-Site: cross-site';
+$headers[] = 'Sec-Fetch-Mode: cors';
+$headers[] = 'Sec-Fetch-Dest: empty';
+$headers[] = 'Referer: https://www.airtelxstream.in/';
+$headers[] = 'Accept-Language: en-US,en;q=0.9';
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-
-//for debug only!
-curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-
-$resp = curl_exec($curl);
-curl_close($curl);
-var_dump($resp);
-
-?>
+$result = curl_exec($ch);
+if (curl_errno($ch)) {
+    echo 'Error:' . curl_error($ch);
+}
+curl_close($ch);
